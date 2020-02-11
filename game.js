@@ -1,9 +1,9 @@
-var gamePattern = [];
 var userClickedPattern = [];
+var gamePattern = [];
+var level = 1;
 var buttonColors = ["red", "blue", "green", "yellow"];
 
 var fadeSpeed = 100;
-var level = 1;
 
 var gameNotStarted = true;
 
@@ -47,21 +47,32 @@ function checkAnswer(currentLevel) {
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(function() {
         nextSequence();
-      }, 1000);
+      }, 500);
     }
   } else {
     gameOver();
+    startOver();
   }
 
 }
 
 function gameOver() {
+  playSound("wrong");
+
   $("body").addClass("game-over");
   setTimeout(function() {
     $("body").removeClass("game-over");
   }, 200);
-  $("#level-title").text("Game Over. Click to try again");
+
+  $("#level-title").text("GAME OVER. CLICK TO TRY AGAIN");
 }
+
+function startOver() {
+  gameNotStarted = true;
+  level = 1;
+  gamePattern = [];
+}
+
 
 function playSound(name) {
   var audio = new Audio("sounds/" + name + ".mp3");
